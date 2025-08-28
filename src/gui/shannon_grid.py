@@ -1,6 +1,8 @@
 import json
 
-import src.log_handle import get_logger
+from src.configs import *
+
+from src.log_handle import get_logger
 logger = get_logger(__name__)
 
 class ShannonGrid:
