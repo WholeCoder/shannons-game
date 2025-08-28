@@ -1,6 +1,9 @@
 import json
 
 from src.configs import *
+from src.sprites.shannon import Shannon
+
+from src.utils.draw_utils import (draw_circle, draw_debug_rects, draw_rect)
 
 from src.log_handle import get_logger
 logger = get_logger(__name__)
@@ -18,6 +21,15 @@ class ShannonGrid:
         self._game_state = game_state
         self._level_number = self._game_state.level
         self.load_level(self._level_number)
+        logger.info("level loaded")
+        self.shannon = Shannon(
+            self._screen,
+            self._game_state,
+            self._matrix,
+            self._shannon_pos,
+            (self.startx, self.start_y)
+        )
+        logger.info("shannon created")
 
     def get_json(self, path):
         with open(path) as fp:
