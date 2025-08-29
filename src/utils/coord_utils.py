@@ -1,5 +1,17 @@
 
 
+def place_elements_offset(
+    screen_width,
+    screen_height,
+    element_width,
+    element_height,
+    xoffset,
+    yoffset):
+    x = (screen_width - element_width) * xoffset
+    y = (screen_height - element_height) * yoffset
+    return x, y
+    
+
 
 def get_tiny_matrix(matrix, cell_size, shannon_speed):
     sub_div = cell_size // shannon_speed

@@ -2,7 +2,7 @@ import json
 
 from src.configs import *
 from src.sprites.shannon import Shannon
-
+from src.utils.coord_utils import (place_elements_offset,)
 from src.utils.draw_utils import (draw_circle, draw_debug_rects, draw_rect)
 
 from src.log_handle import get_logger
@@ -27,7 +27,7 @@ class ShannonGrid:
             self._game_state,
             self._matrix,
             self._shannon_pos,
-            (self.startx, self.start_y)
+            (self.start_x, self.start_y)
         )
         logger.info("shannon created")
 
@@ -37,11 +37,20 @@ class ShannonGrid:
         return payload
     
     def load_level(self, level_number):
-        level_path = f"levels/level_{level_number}.json"
+        level_path = f"levels/level{level_number}.json"
         level_json = self.get_json(level_path)
         num_rows = level_json["num_rows"]
         num_cols = level_json["num_cols"]
         self._matrix = level_json["matrix"]
+        self._shannon_pos = level_json["shannon_start"]
+        self.start_x, self.start_y = place_elements_offset(
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT,
+            CELL_SIZE[0] * num_cols,
+            CELL_SIZE[0] * num_rows,
+            0.5,
+            0.5,
+        )
         self._num_rows = num_rows
         self._num_cols = num_cols
 

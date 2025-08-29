@@ -3,7 +3,7 @@ from pygame import image, transform
 from pygame.sprite import Sprite
 from pygame import Surface
 
-from src.configs import SHANNON, SHANNON_SPEED, CELL_SIZE
+#from src.configs import SHANNON, SHANNON_SPEED, CELL_SIZE
 from src.game.state_management import GameState
 from src.utils.coord_utils import get_tiny_matrix, precompute_matrix_coords
 from src.log_handle import get_logger
@@ -24,7 +24,7 @@ class Shannon(Sprite):
         self.start_pos = start_pos
         self.load_all_frames()
         self.calculate_shannon_coords()
-        self.log_image()
+        self.load_image()
         self.calculate_tiny_matrix()
         self.calculate_coord_matrix()
         self.frame_delay = 5
@@ -32,11 +32,24 @@ class Shannon(Sprite):
     def load_all_frames(self):
         def frame_helper(direction):
             width, height = SHANNON
+            return [
+                transform.scale(image.load(path).convert_alpha(), (width, height))
+                for path in SHANNON_PATHS[direction]
+            ]
+        self.curr_frame_idx = 0
+        self.left_frames = frame_helper("Left")
+        self.right_frames = frame_helper("Right")
+        self.direction_mapper = {
+            "l": self.left_frames,
+            "r": self.right_frames
+        }
+        self.frames = self.right_frames
+        self.move_direction = self.game_state.direction
 
     def calculate_shannon_coords(self):
         pass
 
-    def log_image(self):
+    def load_image(self):
         self.image = self.frames[self.curr_frame_idx]
         self.rect_x = self.shannon_x_coord
         self.rect_y = self.shannon_y_coord

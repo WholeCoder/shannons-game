@@ -7,7 +7,7 @@ def draw_rect(x, y, w, h, screen, color, fill=0):
 def draw_circle(x, y, radius, screen, color):
     draw.circle(screen, color, (x, y), radius)
 
-def draw_debug_rexcts(start_x, start_y, num_rows, num_cols, cell_size, color, screen):
+def draw_debug_rects(start_x, start_y, num_rows, num_cols, cell_size, color, screen):
     curr_x, curr_y = start_x, start_y
     for _ in range(num_rows):
         for _ in range(num_cols):
