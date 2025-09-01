@@ -57,7 +57,7 @@ class ShannonGrid:
         self._num_rows = num_rows
         self._num_cols = num_cols
 
-    def draw_void(self, row, col): ...
+    def draw_void(self, **kwargs): ...
 
     def draw_wall(self, **kwargs):
         draw_rect(
@@ -75,4 +75,11 @@ class ShannonGrid:
         draw_circle(circle_x, circle_y, 7, self._screen, Colors.YELLOW)
         
     def draw_level(self):
-        pass
+        curr_x, curr_y = self.start_x, self.start_y
+        for _, row in enumerate(self._matrix):
+            for _, col in enumerate(row):
+                draw_func = self.function_mapper[col]
+                draw_func(x=curr_x, y=curr_y, w=CELL_SIZE[0], h=CELL_SIZE[0])
+                curr_x += CELL_SIZE[0]
+            curr_x = self.start_x
+            curr_y += CELL_SIZE[0]

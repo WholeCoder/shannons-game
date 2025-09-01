@@ -7,7 +7,6 @@ def __get_x_y(pos, num_rows, num_cols):
         x = num_rows + x
     if pos[1] < 0:
         y = num_cols + y
-    print(f"get_x_y: pos={pos}, num_rows={num_rows}, num_cols={num_cols} => x={x}, y={y}")
     return x, y
 
 def get_coords_from_idx(shannon_pos, start_x, start_y, cell_w, cell_h, num_rows, num_cols):
