@@ -5,6 +5,7 @@ class GameState:
         self.__level = 1
         self.__running = True
         self.__fps = 60
+        self.__direction = ""
         self.__current_time = None
         self.__shannon_rect = None
         self.__is_loaded = False
@@ -12,7 +13,7 @@ class GameState:
         self._mode_change_events = None
         self.__current_mode_index = 0
         self._custom_event = None
-        self._shanon_direction = None
+        self._shannon_direction = None
         self._power_up_event = None
         self._power_event_trigger_time = None
         self._is_shannon_dead = False
@@ -79,12 +80,12 @@ class GameState:
         self._power_up_event = val
 
     @property
-    def shanon_direction(self):
+    def shannon_direction(self):
         return self._shanon_direction
 
-    @shanon_direction.setter
+    @shannon_direction.setter
     def shanon_direction(self, val):
-        self._shanon_direction = val
+        self._shannon_direction = val
 
     @property
     def custom_event(self):
@@ -134,6 +135,16 @@ class GameState:
     @current_time.setter
     def current_time(self, value):
         self.__current_time = value
+
+    @property
+    def direction(self):
+        return self.__direction
+    
+    @direction.setter
+    def direction(self, value):
+        if value not in ["r", "l"]:
+            raise ValueError("Unknown direction")
+        self.__direction = value
 
     @property
     def level(self):

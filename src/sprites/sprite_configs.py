@@ -1,4 +1,4 @@
-PACMAN_PATHS = {
+SHANNON_PATHS = {
     "left": [
         "assets/shannon-left/1.png",
         "assets/shannon-left/2.png",

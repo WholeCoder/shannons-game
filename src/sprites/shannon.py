@@ -3,9 +3,11 @@ from pygame import image, transform
 from pygame.sprite import Sprite
 from pygame import Surface
 
-#from src.configs import SHANNON, SHANNON_SPEED, CELL_SIZE
+from src.configs import SHANNON, SHANNON_SPEED, CELL_SIZE
 from src.game.state_management import GameState
 from src.utils.coord_utils import get_tiny_matrix, precompute_matrix_coords
+from src.sprites.sprite_configs import *
+from src.utils.coord_utils import (get_coords_from_idx)
 from src.log_handle import get_logger
 logger = get_logger(__name__)
 
@@ -37,8 +39,8 @@ class Shannon(Sprite):
                 for path in SHANNON_PATHS[direction]
             ]
         self.curr_frame_idx = 0
-        self.left_frames = frame_helper("Left")
-        self.right_frames = frame_helper("Right")
+        self.left_frames = frame_helper("left")
+        self.right_frames = frame_helper("right")
         self.direction_mapper = {
             "l": self.left_frames,
             "r": self.right_frames
@@ -47,7 +49,16 @@ class Shannon(Sprite):
         self.move_direction = self.game_state.direction
 
     def calculate_shannon_coords(self):
-        pass
+        x, y = get_coords_from_idx(
+            self.shannon_pos,
+            self.start_pos[0],
+            self.start_pos[1],
+            CELL_SIZE[0],
+            CELL_SIZE[1],
+            len(self.matrix),
+            len(self.matrix[0]))
+        self.shannon_x_coord = x
+        self.shannon_y_coord = y
 
     def load_image(self):
         self.image = self.frames[self.curr_frame_idx]

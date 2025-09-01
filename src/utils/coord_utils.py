@@ -1,5 +1,22 @@
 
 
+def __get_x_y(pos, num_rows, num_cols):
+    x = pos[0]
+    y = pos[1]
+    if pos[0] < 0:
+        x = num_rows + x
+    if pos[1] < 0:
+        y = num_cols + y
+    print(f"get_x_y: pos={pos}, num_rows={num_rows}, num_cols={num_cols} => x={x}, y={y}")
+    return x, y
+
+def get_coords_from_idx(shannon_pos, start_x, start_y, cell_w, cell_h, num_rows, num_cols):
+    x, y = __get_x_y(shannon_pos, num_rows, num_cols)
+    x_coord = start_x + (y * cell_w)
+    y_coord = start_y + (x * cell_h)
+    return x_coord, y_coord
+
+
 def place_elements_offset(
     screen_width,
     screen_height,
