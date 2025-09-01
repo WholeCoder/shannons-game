@@ -31,7 +31,7 @@ class GameRun:
                 if event.type == pygame.QUIT:
                     self.events.pygame_quit()
             self.all_sprites.update()
-            self.gui.draw_screen()
+            self.gui.draw_screens()
             pygame.display.flip()
             clock.tick(60)
         pygame.quit()

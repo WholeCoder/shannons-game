@@ -14,8 +14,11 @@ class ShannonGrid:
         self.function_mapper = {
             "void": self.draw_void,
             "wall": self.draw_wall,
+            "dot": self.draw_void,
+            "spoint": self.draw_void,
             "power": self.draw_power,
             "null": self.draw_void,
+            "elec": self.draw_void,
         }
         self._screen = screen
         self._game_state = game_state
@@ -71,3 +74,5 @@ class ShannonGrid:
         circle_y = kwargs["y"] + kwargs["h"]
         draw_circle(circle_x, circle_y, 7, self._screen, Colors.YELLOW)
         
+    def draw_level(self):
+        pass

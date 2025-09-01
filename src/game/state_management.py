@@ -13,7 +13,7 @@ class GameState:
         self._mode_change_events = None
         self.__current_mode_index = 0
         self._custom_event = None
-        self._shannon_direction = None
+        self._shannon_direction = "r"
         self._power_up_event = None
         self._power_event_trigger_time = None
         self._is_shannon_dead = False

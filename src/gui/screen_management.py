@@ -14,5 +14,5 @@ class ScreenManager:
         logger.info("shannon grid created")
         self.all_sprites.add(self.shannon.shannon)
 
-    def draw_screen(self):
-        pass
+    def draw_screens(self):
+        self.shannon.draw_level()
