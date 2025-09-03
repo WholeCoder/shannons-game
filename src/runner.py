@@ -26,13 +26,18 @@ class GameRun:
 
     def main(self):
         clock = pygame.time.Clock()
+        dt = None
         while self.game_state.running:
+            self.game_state.current_time = pygame.time.get_ticks()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.events.pygame_quit()
-            self.all_sprites.update()
+            self.screen.fill(Colors.BLACK)
             self.gui.draw_screens()
+            self.all_sprites.draw(self.screen)
+            self.all_sprites.update(dt)
             pygame.display.flip()
-            clock.tick(60)
+            dt = clock.tick(self.game_state.fps)
+            dt /= 100
         pygame.quit()
         sys.exit()
