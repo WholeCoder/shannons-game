@@ -80,3 +80,67 @@ class Shannon(Sprite):
                                                      SHANNON_SPEED,
                                                      len(self.tiny_matrix),
                                                      len(self.tiny_matrix[0]))
+        
+    def update(self, dt):
+        self.frame_update()
+        self.build_bounding_boxes(self.rect_x, self.rect_y)
+        self.movement_bind()
+        self.move_shannon(dt)
+        self.boundary_check()
+        self.frame_direction_update()
+
+    def frame_direction_update(self):
+        if self.move_direction != "":
+            self.frames = self.direction_mapper[self.move_direction]
+
+
+    def boundary_check(self):
+        if (self.tiny_start_y + self.subdiv * 2) >= len(self.tiny_matrix[0]) - 1:
+            self.tiny_start_y = 0
+            self.rect_x = self.coord_matrix[self.tiny_start_x][0][0]
+
+        elif (self.tiny_start_y - 1) < 0:
+            self.tiny_start_y = len(self.tiny_matrix[0]) - (self.subdiv * 3)
+            self.rect_x = self.coord_matrix[self.tiny_start_x][-self.subdiv*2 - 4][0]
+
+    def frame_update(self):
+        self.frame_delay -= 1
+        if self.frame_delay <= 0:
+            self.frame_delay = 5
+            self.curr_frame_idx = (self.curr_frame_idx + 1) % len(self.frames)
+            self.image = self.frames[self.curr_frame_idx]
+
+    def build_bounding_boxes(self, x: int | float, y: int | float):
+        self.rect_x = x + (CELL_SIZE[0] - self.rect.width) // 2
+        self.rect_y = y + (CELL_SIZE[1] - self.rect.height) // 2
+
+    def movement_bind(self):
+        match self.game_state.direction:
+            case 'l':
+                if self.edges_helper_vertical(self.tiny_start_x, self.tiny_start_y, -1):
+                    self.move_direction = "l"
+                    self.game_state.pacman_direction = 'l'
+            
+            case 'r':
+                if self.edges_helper_vertical(
+                    self.tiny_start_x, self.tiny_start_y, self.subdiv * 2
+                ):
+                    self.move_direction = "r"
+                    self.game_state.pacman_direction = 'r'
+
+
+    def move_shannon(self, dt: float):
+        match self.move_direction:
+            case "l":
+                if self.edges_helper_vertical(self.tiny_start_x, self.tiny_start_y, -1):
+                    self.rect_x -= SHANNON_SPEED
+                    self.tiny_start_y -= 1
+            case "r":
+                if self.edges_helper_vertical(
+                self.tiny_start_x, self.tiny_start_y, self.subdiv * 2
+            ):
+                    self.rect_x += SHANNON_SPEED
+                    self.tiny_start_y += 1
+
+        self.game_state.pacman_rect = (self.rect_x, self.rect_y, 
+                                       CELL_SIZE[0]*2, CELL_SIZE[0]*2)
