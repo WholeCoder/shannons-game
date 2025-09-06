@@ -84,7 +84,7 @@ class GameState:
         return self._shanon_direction
 
     @shannon_direction.setter
-    def shanon_direction(self, val):
+    def shannon_direction(self, val):
         self._shannon_direction = val
 
     @property

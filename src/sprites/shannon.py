@@ -111,22 +111,22 @@ class Shannon(Sprite):
             self.image = self.frames[self.curr_frame_idx]
 
     def build_bounding_boxes(self, x: int | float, y: int | float):
-        self.rect_x = x + (CELL_SIZE[0] - self.rect.width) // 2
-        self.rect_y = y + (CELL_SIZE[1] - self.rect.height) // 2
+        self.rect.x = x + (CELL_SIZE[0] * 2 - self.rect.width) // 2
+        self.rect.y = y + (CELL_SIZE[1] * 2 - self.rect.height) // 2
 
     def movement_bind(self):
         match self.game_state.direction:
             case 'l':
                 if self.edges_helper_vertical(self.tiny_start_x, self.tiny_start_y, -1):
                     self.move_direction = "l"
-                    self.game_state.pacman_direction = 'l'
+                    self.game_state.shannon_direction = 'l'
             
             case 'r':
                 if self.edges_helper_vertical(
                     self.tiny_start_x, self.tiny_start_y, self.subdiv * 2
                 ):
                     self.move_direction = "r"
-                    self.game_state.pacman_direction = 'r'
+                    self.game_state.shannon_direction = 'r'
 
     def move_shannon(self, dt: float):
         match self.move_direction:
@@ -141,8 +141,13 @@ class Shannon(Sprite):
                     self.rect_x += SHANNON_SPEED
                     self.tiny_start_y += 1
 
-        self.game_state.pacman_rect = (self.rect_x, self.rect_y, 
+        self.game_state.shannon_rect = (self.rect_x, self.rect_y, 
                                        CELL_SIZE[0]*2, CELL_SIZE[0]*2)
+        
+
+
+
+
 
     def edges_helper_vertical(self, row: int, 
                               col: int, 
