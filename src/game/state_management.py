@@ -5,7 +5,7 @@ class GameState:
         self.__level = 1
         self.__running = True
         self.__fps = 60
-        self.__direction = ""
+        self.__direction = "l"
         self.__current_time = None
         self.__shannon_rect = None
         self.__is_loaded = False

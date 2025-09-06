@@ -128,7 +128,6 @@ class Shannon(Sprite):
                     self.move_direction = "r"
                     self.game_state.pacman_direction = 'r'
 
-
     def move_shannon(self, dt: float):
         match self.move_direction:
             case "l":
@@ -144,3 +143,11 @@ class Shannon(Sprite):
 
         self.game_state.pacman_rect = (self.rect_x, self.rect_y, 
                                        CELL_SIZE[0]*2, CELL_SIZE[0]*2)
+
+    def edges_helper_vertical(self, row: int, 
+                              col: int, 
+                              additive: int):
+        for r in range(self.subdiv * 2):
+            if self.tiny_matrix[row + r][col + additive] == "wall":
+                return False
+        return True
