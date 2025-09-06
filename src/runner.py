@@ -30,8 +30,7 @@ class GameRun:
         while self.game_state.running:
             self.game_state.current_time = pygame.time.get_ticks()
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.events.pygame_quit()
+                self.events.handle_events(event)
             self.screen.fill(Colors.BLACK)
             self.gui.draw_screens()
             self.all_sprites.draw(self.screen)
