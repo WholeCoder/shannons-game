@@ -16,3 +16,4 @@ CELL_SIZE = (20, 20)
 SHANNON = (32, 32)
 SHANNON_SPEED = 4
 DOT_POINT = 10
+WALL_PATH = "assets/wall.png"

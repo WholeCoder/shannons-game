@@ -1,4 +1,4 @@
-from src.gui.shannon_grid import ShannonGrid
+from src.gui.shannon_grid import Block, ShannonGrid
 
 from src.log_handle import get_logger
 
@@ -13,6 +13,11 @@ class  ScreenManager:
         self.shannon = ShannonGrid(screen, game_state)
         logger.info("shannon grid created")
         self.all_sprites.add(self.shannon.shannon)
+        for row in self.shannon.sprite_matrix:
+            for block_sprite in row:
+                if block_sprite is not None:
+                    self.all_sprites.add(block_sprite)
+        logger.info("all sprites added to group")
 
     def draw_screens(self):
-        self.shannon.draw_level()
+        pass#self.shannon.draw_level()
