@@ -13,7 +13,7 @@ class  ScreenManager:
         self.shannon = ShannonGrid(screen, game_state)
         logger.info("shannon grid created")
         self.all_sprites.add(self.shannon.shannon)
-        for row in self.shannon.sprite_matrix:
+        for row in self._game_state.sprite_matrix:
             for block_sprite in row:
                 if block_sprite is not None:
                     self.all_sprites.add(block_sprite)

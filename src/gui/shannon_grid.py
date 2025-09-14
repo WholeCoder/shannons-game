@@ -77,7 +77,7 @@ class ShannonGrid:
         width, height = CELL_SIZE
         path = WALL_PATH
 
-        self.sprite_matrix = []
+        self._game_state.sprite_matrix = []
         curr_x, curr_y = self.start_x, self.start_y
         for _, row in enumerate(self._matrix):
             sprite_row = []
@@ -88,7 +88,7 @@ class ShannonGrid:
                 else:
                     sprite_row.append(None)
                 curr_x += CELL_SIZE[0]
-            self.sprite_matrix.append(sprite_row)
+            self._game_state.sprite_matrix.append(sprite_row)
             
             curr_x = self.start_x
             curr_y += CELL_SIZE[0]

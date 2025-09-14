@@ -1,6 +1,7 @@
 
 from pygame import image, transform
 from pygame.sprite import Sprite
+from pygame.rect import Rect
 from pygame import Surface
 
 from src.configs import SHANNON, SHANNON_SPEED, CELL_SIZE
@@ -24,11 +25,12 @@ class Shannon(Sprite):
         self.shannon_pos = shannon_pos
         self.matrix = matrix
         self.start_pos = start_pos
+        self.sprite_matrix = self.game_state.sprite_matrix
         self.load_all_frames()
         self.calculate_shannon_coords()
         self.load_image()
-        self.calculate_tiny_matrix()
-        self.calculate_coord_matrix()
+        # self.calculate_tiny_matrix()
+        # self.calculate_coord_matrix()
         self.frame_delay = 5
 
     def load_all_frames(self):
@@ -86,7 +88,7 @@ class Shannon(Sprite):
         self.build_bounding_boxes(self.rect_x, self.rect_y)
         self.movement_bind()
         self.move_shannon(dt)
-        self.boundary_check()
+        # self.boundary_check()
         self.frame_direction_update()
 
     def frame_direction_update(self):
@@ -117,36 +119,48 @@ class Shannon(Sprite):
     def movement_bind(self):
         match self.game_state.direction:
             case 'l':
-                if self.edges_helper_vertical(self.tiny_start_x, self.tiny_start_y, -1):
-                    self.move_direction = "l"
-                    self.game_state.shannon_direction = 'l'
+                # if self.edges_helper_vertical(self.tiny_start_x, self.tiny_start_y, -1):
+                self.move_direction = "l"
+                self.game_state.shannon_direction = 'l'
             
             case 'r':
-                if self.edges_helper_vertical(
-                    self.tiny_start_x, self.tiny_start_y, self.subdiv * 2
-                ):
-                    self.move_direction = "r"
-                    self.game_state.shannon_direction = 'r'
+                # if self.edges_helper_vertical(
+                #     self.tiny_start_x, self.tiny_start_y, self.subdiv * 2
+                # ):
+                self.move_direction = "r"
+                self.game_state.shannon_direction = 'r'
 
     def move_shannon(self, dt: float):
         match self.move_direction:
             case "l":
-                if self.edges_helper_vertical(self.tiny_start_x, self.tiny_start_y, -1):
+                if self.doesnt_run_into_wall("left"): #self.edges_helper_vertical(self.tiny_start_x, self.tiny_start_y, -1):
                     self.rect_x -= SHANNON_SPEED
-                    self.tiny_start_y -= 1
+                    # self.tiny_start_y -= 1
             case "r":
-                if self.edges_helper_vertical(
-                self.tiny_start_x, self.tiny_start_y, self.subdiv * 2
-            ):
+                if self.doesnt_run_into_wall("right"): 
+                    #self.edges_helper_vertical(
+            #     self.tiny_start_x, self.tiny_start_y, self.subdiv * 2
+            # ):
                     self.rect_x += SHANNON_SPEED
-                    self.tiny_start_y += 1
+                    # self.tiny_start_y += 1
 
         self.game_state.shannon_rect = (self.rect_x, self.rect_y, 
                                        CELL_SIZE[0]*2, CELL_SIZE[0]*2)
         
 
-
-
+    def doesnt_run_into_wall(self, direction: str):
+        for row in self.sprite_matrix:
+            for sp in row:
+                if sp is not None:
+                    next_position = Rect(self.rect)
+                    # if sp.rect.colliderect(self.rect):
+                    if direction == "left" and self.move_direction == "l":
+                        next_position.x -= SHANNON_SPEED
+                    if direction == "right" and self.move_direction == "r":
+                        next_position.x += SHANNON_SPEED
+                    if sp.rect.colliderect(next_position):
+                        return False
+        return True
 
 
     def edges_helper_vertical(self, row: int, 

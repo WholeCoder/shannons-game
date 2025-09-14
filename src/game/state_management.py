@@ -21,7 +21,15 @@ class GameState:
         self._mins_played = 0
         self._points = -DOT_POINT
         self._level_complete = False
+        self._sprite_matrix = None
 
+    @property
+    def sprite_matrix(self):
+        return self._sprite_matrix
+    
+    @sprite_matrix.setter
+    def sprite_matrix(self, val):
+        self._sprite_matrix = val
 
     @property
     def level_complete(self):
