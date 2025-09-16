@@ -131,6 +131,11 @@ class Shannon(Sprite):
                 self.game_state.shannon_direction = 'r'
 
     def move_shannon(self, dt: float):
+
+        if not self.touches_wall_below():
+            self.rect_y += SHANNON_SPEED
+            self.game_state.shannon_rect = (self.rect_x, self.rect_y, 
+                                       CELL_SIZE[0]*2, CELL_SIZE[0]*2)
         match self.move_direction:
             case "l":
                 if self.doesnt_run_into_wall("left"): #self.edges_helper_vertical(self.tiny_start_x, self.tiny_start_y, -1):
@@ -147,6 +152,17 @@ class Shannon(Sprite):
         self.game_state.shannon_rect = (self.rect_x, self.rect_y, 
                                        CELL_SIZE[0]*2, CELL_SIZE[0]*2)
         
+    
+    def touches_wall_below(self):
+        for row in self.sprite_matrix:
+            for sp in row:
+                if sp is not None:
+                    next_position = Rect(self.rect)
+                    # if sp.rect.colliderect(self.rect):
+                    next_position.y += SHANNON_SPEED
+                    if sp.rect.colliderect(next_position):
+                        return True
+        return False
 
     def doesnt_run_into_wall(self, direction: str):
         for row in self.sprite_matrix:
