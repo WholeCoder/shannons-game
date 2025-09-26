@@ -4,7 +4,7 @@ from pygame.sprite import Sprite
 from pygame.rect import Rect
 from pygame import Surface
 
-from src.configs import SHANNON, SHANNON_SPEED, CELL_SIZE
+from src.configs import SHANNON, SHANNON_FALL_SPEED, SHANNON_SPEED, CELL_SIZE
 from src.game.state_management import GameState
 from src.utils.coord_utils import get_tiny_matrix, precompute_matrix_coords
 from src.sprites.sprite_configs import *
@@ -133,7 +133,7 @@ class Shannon(Sprite):
     def move_shannon(self, dt: float):
 
         if not self.touches_wall_below():
-            self.rect_y += SHANNON_SPEED
+            self.rect_y += SHANNON_FALL_SPEED
             self.game_state.shannon_rect = (self.rect_x, self.rect_y, 
                                        CELL_SIZE[0]*2, CELL_SIZE[0]*2)
         match self.move_direction:
