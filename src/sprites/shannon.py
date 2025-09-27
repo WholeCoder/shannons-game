@@ -129,6 +129,9 @@ class Shannon(Sprite):
                 # ):
                 self.move_direction = "r"
                 self.game_state.shannon_direction = 'r'
+            case _:
+                self.move_direction = ""
+                self.game_state.shannon_direction = ""
 
     def move_shannon(self, dt: float):
 
@@ -148,6 +151,8 @@ class Shannon(Sprite):
             # ):
                     self.rect_x += SHANNON_SPEED
                     # self.tiny_start_y += 1
+        
+        # self.move_direction = self.game_state.direction = ""
 
         self.game_state.shannon_rect = (self.rect_x, self.rect_y, 
                                        CELL_SIZE[0]*2, CELL_SIZE[0]*2)
@@ -168,12 +173,14 @@ class Shannon(Sprite):
         for row in self.sprite_matrix:
             for sp in row:
                 if sp is not None:
-                    next_position = Rect(self.rect)
                     # if sp.rect.colliderect(self.rect):
+                    shanny_x = self.rect.x
                     if direction == "left" and self.move_direction == "l":
-                        next_position.x -= SHANNON_SPEED
+                        shanny_x -= SHANNON_SPEED
                     if direction == "right" and self.move_direction == "r":
-                        next_position.x += SHANNON_SPEED
+                        shanny_x += SHANNON_SPEED
+
+                    next_position = Rect(shanny_x, self.rect.y, self.rect.width, self.rect.height)
                     if sp.rect.colliderect(next_position):
                         return False
         return True

@@ -5,7 +5,7 @@ class GameState:
         self.__level = 1
         self.__running = True
         self.__fps = 60
-        self.__direction = "l"
+        self.__direction = ""
         self.__current_time = None
         self.__shannon_rect = None
         self.__is_loaded = False
@@ -13,7 +13,7 @@ class GameState:
         self._mode_change_events = None
         self.__current_mode_index = 0
         self._custom_event = None
-        self._shannon_direction = "r"
+        self._shannon_direction = ""
         self._power_up_event = None
         self._power_event_trigger_time = None
         self._is_shannon_dead = False
@@ -150,7 +150,7 @@ class GameState:
     
     @direction.setter
     def direction(self, value):
-        if value not in ["r", "l"]:
+        if value not in ["r", "l", ""]: # "" makes shannon stop moving
             raise ValueError("Unknown direction")
         self.__direction = value
 
