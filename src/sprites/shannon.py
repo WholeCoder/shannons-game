@@ -4,7 +4,9 @@ from pygame.sprite import Sprite
 from pygame.rect import Rect
 from pygame import Surface
 
-from src.configs import SHANNON, SHANNON_FALL_SPEED, SHANNON_SPEED, CELL_SIZE
+from math import sqrt, ceil
+
+from src.configs import SHANNON_JUMP_HEIGHT, SHANNON, SHANNON_FALL_SPEED, SHANNON_SPEED, CELL_SIZE
 from src.game.state_management import GameState
 from src.utils.coord_utils import get_tiny_matrix, precompute_matrix_coords
 from src.sprites.sprite_configs import *
@@ -193,3 +195,19 @@ class Shannon(Sprite):
             if self.tiny_matrix[row + r][col + additive] == "wall":
                 return False
         return True
+
+    def compute_sum_of_jump_increments(self):
+        a = 1
+        b = 1
+        c = -2*SHANNON_JUMP_HEIGHT
+
+        sqrtpart = (b**2) - (4*a*c)
+        answer1 = (-b + sqrt(sqrtpart)) / (2*a)
+        answer2 = (-b - sqrt(sqrtpart)) / (2*a)
+
+        inc = -1
+        if (answer1 > answer2):
+            inc = ceil(answer1)
+        else:
+            inc = ceil(answer2)
+        return inc
