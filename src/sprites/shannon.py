@@ -141,6 +141,28 @@ class Shannon(Sprite):
             self.rect_y += SHANNON_FALL_SPEED
             self.game_state.shannon_rect = (self.rect_x, self.rect_y, 
                                        CELL_SIZE[0]*2, CELL_SIZE[0]*2)
+            
+
+        if self.game_state.shannon_is_jump_direction == "start jumping":
+            self.game_state.shannon_is_jump_direction = "up"
+            self.game_state.jump_step = self.compute_sum_of_jump_increments()
+            print(f"jump step: {self.game_state.jump_step}")
+        
+        if self.game_state.shannon_is_jump_direction == "up":
+            # jump_increment = self.compute_sum_of_jump_increments()
+            if self.game_state.jump_step > 0:
+                self.rect_y -= (self.game_state.jump_step)
+                self.game_state.jump_step -= 1
+            else:
+                self.game_state.shannon_is_jump_direction = "down"
+        elif self.game_state.shannon_is_jump_direction == "down":
+            if self.game_state.jump_step > 0:
+                self.rect_y += (self.game_state.jump_step)
+                self.game_state.jump_step -= 1
+            else:
+                self.game_state.shannon_is_jump_direction = "not jumping"
+                self.game_state.jump_step = 0
+
         match self.move_direction:
             case "l":
                 if self.doesnt_run_into_wall("left"): #self.edges_helper_vertical(self.tiny_start_x, self.tiny_start_y, -1):

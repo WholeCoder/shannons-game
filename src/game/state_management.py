@@ -6,6 +6,7 @@ class GameState:
         self.__running = True
         self.__fps = 60
         self.__direction = ""
+        self.__shannon_is_jump_direction = "not jumping"
         self.__current_time = None
         self.__shannon_rect = None
         self.__is_loaded = False
@@ -22,6 +23,23 @@ class GameState:
         self._points = -DOT_POINT
         self._level_complete = False
         self._sprite_matrix = None
+        self.__jump_step = 0
+
+    @property
+    def jump_step(self):
+        return self.__jump_step
+    
+    @jump_step.setter
+    def jump_step(self, val):
+        self.__jump_step = val
+
+    @property
+    def shannon_is_jump_direction(self):
+        return self.__shannon_is_jump_direction
+    
+    @shannon_is_jump_direction.setter
+    def shannon_is_jump_direction(self, val):
+        self.__shannon_is_jump_direction = val
 
     @property
     def sprite_matrix(self):
