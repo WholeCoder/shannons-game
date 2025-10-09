@@ -16,18 +16,20 @@ class EventHandler:
             self._game_screen.direction = "l"
         elif key == K_RIGHT:
             self._game_screen.direction = "r"
-        elif key == K_SPACE:
-            if not self._game_screen.shannon_is_jump_direction == "not jumping":
+        if key == K_SPACE:
+            if self._game_screen.shannon_is_jump_direction == "not jumping":
                 self._game_screen.shannon_is_jump_direction = "start jumping"
                 self._game_screen.jump_step = 0
+                print("Jumping initiated")
+            print("-------------- Jumping ---------------")
 
     def key_bindings_up(self, key):
         if key == K_LEFT:
             self._game_screen.direction = ""
         elif key == K_RIGHT:
             self._game_screen.direction = ""
-        elif key == K_SPACE:
-            self._game_screen.direction = ""
+        # elif key == K_SPACE:
+        #     self._game_screen.direction = ""
 
     def handle_events(self, event):
         if event.type == QUIT:
