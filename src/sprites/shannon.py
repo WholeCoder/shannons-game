@@ -156,8 +156,8 @@ class Shannon(Sprite):
             else:
                 self.game_state.shannon_is_jump_direction = "down"
         elif self.game_state.shannon_is_jump_direction == "down":
-            if self.game_state.jump_step > 0:
-                self.rect_y += (self.game_state.jump_step)
+            if not self.touches_wall_below():
+                self.rect_y += 5#(self.game_state.jump_step)
                 self.game_state.jump_step -= 1
             else:
                 self.game_state.shannon_is_jump_direction = "not jumping"
