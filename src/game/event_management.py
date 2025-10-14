@@ -20,8 +20,6 @@ class EventHandler:
             if self._game_screen.shannon_is_jump_direction == "not jumping":
                 self._game_screen.shannon_is_jump_direction = "start jumping"
                 self._game_screen.jump_step = 0
-                print("Jumping initiated")
-            print("-------------- Jumping ---------------")
 
     def key_bindings_up(self, key):
         if key == K_LEFT:

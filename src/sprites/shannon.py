@@ -146,11 +146,10 @@ class Shannon(Sprite):
         if self.game_state.shannon_is_jump_direction == "start jumping":
             self.game_state.shannon_is_jump_direction = "up"
             self.game_state.jump_step = self.compute_sum_of_jump_increments()
-            print(f"jump step: {self.game_state.jump_step}")
         
         if self.game_state.shannon_is_jump_direction == "up":
             # jump_increment = self.compute_sum_of_jump_increments()
-            if self.game_state.jump_step > 0:
+            if not self.touches_wall_above():
                 self.rect_y -= (self.game_state.jump_step)
                 self.game_state.jump_step -= 1
             else:
@@ -189,6 +188,17 @@ class Shannon(Sprite):
                     next_position = Rect(self.rect)
                     # if sp.rect.colliderect(self.rect):
                     next_position.y += SHANNON_SPEED
+                    if sp.rect.colliderect(next_position):
+                        return True
+        return False
+
+    def touches_wall_above(self):
+        for row in self.sprite_matrix:
+            for sp in row:
+                if sp is not None:
+                    next_position = Rect(self.rect)
+                    # if sp.rect.colliderect(self.rect):
+                    next_position.y -= self.game_state.jump_step#SHANNON_SPEED
                     if sp.rect.colliderect(next_position):
                         return True
         return False
